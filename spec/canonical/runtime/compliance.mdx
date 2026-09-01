@@ -1,0 +1,25 @@
+# Compliance Mappings
+
+AIP Runtime is designed to satisfy the technical safeguard requirements of common security frameworks. The mappings below indicate which spec behaviours satisfy which criteria.
+
+**These are reference mappings only.** A conforming AIP implementation meets the *technical* requirements; achieving certification requires organisational controls outside the scope of this specification.
+
+## SOC 2
+
+| Criterion | AIP Runtime mechanism |
+|---|---|
+| CC6.1 — Logical access controls | [Policy document](/spec/runtime/policy) restricts agent access to declared, consented scope |
+| CC6.2 — Access provisioned appropriately | [Versioning rule](/spec/identity#versioning-rule) requires re-consent for any scope expansion |
+| CC6.3 — Access removal | Instant revocation via [broker](/spec/runtime/broker); install ID refused on next request |
+| CC7.2 — Monitoring for security events | [Audit log](/spec/runtime/audit) records every credential retrieval and gated operation |
+| CC9.2 — Vendor and partner risk management | [Identity declaration](/spec/identity) provides verifiable scope declaration for third-party agents |
+
+## HIPAA
+
+| Technical Safeguard | AIP Runtime mechanism |
+|---|---|
+| §164.312(a)(1) — Access control | Policy document enforces minimum necessary access per agent installation |
+| §164.312(b) — Audit controls | [Audit log](/spec/runtime/audit) records access events with required minimum fields |
+| §164.312(c)(1) — Integrity | Audit log immutability — append-only, no retroactive modification |
+| §164.312(d) — Authentication | Consent token + install ID authenticate the agent on every broker request |
+| §164.312(e)(2)(ii) — Encryption in transit | Credential transport must use TLS 1.2 or higher; storage encryption is implementation-defined |
