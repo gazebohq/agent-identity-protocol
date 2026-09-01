@@ -1,0 +1,43 @@
+# Scope Syntax
+
+Scope is expressed as an array of service permission objects. Each object names a `service` and the `actions` the agent requires within that service.
+
+## Format
+
+```json
+{
+  "service": "<service-slug>",
+  "actions": ["<resource>:<action>", "..."]
+}
+```
+
+`service`, `resource`, and `action` are lowercase ASCII identifiers containing letters, digits, and hyphens, and must start with a letter. An action is written as exactly one `resource:action` pair. A service object must not repeat an action, and a declaration must not repeat a service.
+
+Identity providers define the action vocabulary for each service. `*` is allowed only as the action segment (`resource:*`) and represents every action the provider recognises for that resource.
+
+## Common action names
+
+| Action | Meaning |
+|---|---|
+| `read` | Read an individual resource |
+| `list` | List or search a resource collection |
+| `create` | Create a resource |
+| `update` | Update a resource |
+| `write` | Provider-defined create and/or update access |
+| `delete` | Delete the resource |
+| `*` | All provider-recognised actions for the resource |
+
+## Examples
+
+```json
+{ "service": "stripe", "actions": ["payments:read", "customers:read"] }
+{ "service": "github", "actions": ["repos:read", "issues:write"] }
+{ "service": "cloudflare", "actions": ["dns:*"] }
+{ "service": "vercel", "actions": ["env:write"] }
+```
+
+## Principle of least privilege
+
+Declared scope should reflect the minimum the agent requires for its stated task. Implementations may flag agents whose declared scope is significantly broader than their observed usage.
+
+For policy narrowing, an exact declared action may only be granted exactly. A declared wildcard such as `dns:*` may be narrowed to one or more explicit actions for `dns`, but no other resource or service.
