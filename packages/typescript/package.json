@@ -1,0 +1,62 @@
+{
+  "name": "@gazebohq/agent-identity-protocol",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Portable AIP v0.1 validators for identity, policy, and audit-log documents.",
+  "license": "Apache-2.0",
+  "homepage": "https://gazebohq.com/spec",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gazebohq/agent-identity-protocol.git",
+    "directory": "packages/typescript"
+  },
+  "bugs": {
+    "url": "https://github.com/gazebohq/agent-identity-protocol/issues"
+  },
+  "keywords": [
+    "agent-identity-protocol",
+    "aip",
+    "ai-agents",
+    "json-schema",
+    "validator"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "schemas",
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schemas/identity.json": "./schemas/identity.json",
+    "./schemas/policy.json": "./schemas/policy.json",
+    "./schemas/audit-log.json": "./schemas/audit-log.json"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsx test/conformance.ts",
+    "prepack": "pnpm run build"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "tsx": "catalog:"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
