@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schema.gazebohq.com/v0.1/audit-log.json",
+  "title": "AIP v0.1 Audit Log Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "log_version", "event_id", "timestamp", "agent_id", "install_id", "service", "operation", "authorization_basis", "outcome", "approval_required"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "format": "uri",
+      "description": "Use the canonical AIP URL, or an explicitly verified equivalent mirror."
+    },
+    "log_version": {"const": "1.0"},
+    "event_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "timestamp": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "agent_id": {"$ref": "#/$defs/identifier"},
+    "install_id": {"type": "string", "minLength": 1, "maxLength": 256},
+    "service": {"$ref": "#/$defs/identifier"},
+    "operation": {"type": "string", "minLength": 1, "maxLength": 512},
+    "authorization_basis": {"type": "string", "minLength": 1, "maxLength": 512},
+    "outcome": {"enum": ["approved", "denied", "pending_approval"]},
+    "approval_required": {"type": "boolean"}
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "minLength": 1,
+      "maxLength": 128
+    }
+  }
+}
