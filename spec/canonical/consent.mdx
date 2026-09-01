@@ -1,0 +1,29 @@
+# The Consent Token
+
+When a user approves an agent through a compatible consent flow, they receive a **consent token** — a bearer token scoped to exactly the services and actions they approved (which may be equal to or narrower than the agent's declared scope).
+
+## Properties of a valid consent token
+
+- Scoped to the approving user's connected services — never to the agent author's
+- Issued by the identity provider (e.g. Gazebo), not by the agent author
+- The agent author receives no visibility into the consumer's credentials or connected services
+- Carries a unique install ID linking it to the published agent identity and version
+- Compatible with MCP (`get_credential` tool call) and the AIP SDK
+
+## Token structure
+
+v0.1 deliberately does not standardise token encoding. Implementations may use any token format; Gazebo uses opaque bearer tokens. The structure below is illustrative.
+
+```
+ag_{install_id}_{random}
+```
+
+Before a broker releases a credential, the token must resolve at the identity provider to:
+- Installing user ID
+- Published agent ID + version
+- Approved scope (what the user actually granted)
+- Issued at / expires at
+
+## Revocation
+
+A consent token must be revocable by the installing user at any time, independently of any other token. Revocation takes effect immediately — the agent cannot retrieve further credentials after revocation.
