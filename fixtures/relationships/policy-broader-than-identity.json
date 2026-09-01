@@ -1,0 +1,32 @@
+{
+  "identity": {
+    "$schema": "https://schema.gazebohq.com/v0.1/identity.json",
+    "aip": "0.1",
+    "id": "stripe-payment-monitor",
+    "name": "Stripe Payment Monitor",
+    "description": "Monitors Stripe payments.",
+    "author": {
+      "name": "Example Labs"
+    },
+    "version": "1.0.0",
+    "scope": [
+      {
+        "service": "stripe",
+        "actions": ["charges:create"]
+      }
+    ]
+  },
+  "policy": {
+    "$schema": "https://schema.gazebohq.com/v0.1/policy.json",
+    "aip": "0.1",
+    "agent_id": "stripe-payment-monitor",
+    "install_id": "install_123",
+    "version": "1.0.0",
+    "policy": [
+      {
+        "service": "stripe",
+        "actions": ["charges:*"]
+      }
+    ]
+  }
+}
