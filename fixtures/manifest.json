@@ -1,0 +1,79 @@
+[
+  {
+    "name": "identity/minimal",
+    "type": "identity",
+    "valid": true,
+    "schemaValid": true,
+    "file": "identity/minimal.json"
+  },
+  {
+    "name": "identity/full",
+    "type": "identity",
+    "valid": true,
+    "schemaValid": true,
+    "file": "identity/full.json"
+  },
+  {
+    "name": "identity/duplicate-service",
+    "type": "identity",
+    "valid": false,
+    "schemaValid": true,
+    "file": "identity/duplicate-service.json"
+  },
+  {
+    "name": "policy/narrow",
+    "type": "policy",
+    "valid": true,
+    "schemaValid": true,
+    "file": "policy/narrow.json"
+  },
+  {
+    "name": "policy/wildcard-approval",
+    "type": "policy",
+    "valid": true,
+    "schemaValid": true,
+    "file": "policy/wildcard-approval.json"
+  },
+  {
+    "name": "policy/approval-outside-policy",
+    "type": "policy",
+    "valid": false,
+    "schemaValid": true,
+    "file": "policy/approval-outside-policy.json"
+  },
+  {
+    "name": "policy/multiple-thresholds",
+    "type": "policy",
+    "valid": false,
+    "schemaValid": false,
+    "file": "policy/multiple-thresholds.json"
+  },
+  {
+    "name": "audit-log/approved",
+    "type": "audit-log",
+    "valid": true,
+    "schemaValid": true,
+    "file": "audit-log/approved.json"
+  },
+  {
+    "name": "audit-log/invalid-outcome",
+    "type": "audit-log",
+    "valid": false,
+    "schemaValid": false,
+    "file": "audit-log/invalid-outcome.json"
+  },
+  {
+    "name": "relationship/policy-within-identity",
+    "type": "policy-against-identity",
+    "valid": true,
+    "schemaValid": true,
+    "file": "relationships/policy-within-identity.json"
+  },
+  {
+    "name": "relationship/policy-broader-than-identity",
+    "type": "policy-against-identity",
+    "valid": false,
+    "schemaValid": true,
+    "file": "relationships/policy-broader-than-identity.json"
+  }
+]
