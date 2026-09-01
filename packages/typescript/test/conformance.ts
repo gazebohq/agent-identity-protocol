@@ -195,7 +195,7 @@ assert.equal(
 );
 
 const packageRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
-const fixturesRoot = resolve(packageRoot, "test", "fixtures");
+const fixturesRoot = resolve(packageRoot, "..", "..", "fixtures");
 
 const schemaDocuments = Object.fromEntries(
   await Promise.all(
