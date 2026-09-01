@@ -1,0 +1,26 @@
+# Runtime Enforcement
+
+The Runtime section defines the ongoing enforcement layer — what happens on every request an agent makes after a user has consented.
+
+Where [Identity](/spec/identity) and [Consent](/spec/consent) cover the declaration and the approval event, Runtime covers moment-to-moment operation: is this agent allowed to do this specific thing right now?
+
+## Three components
+
+| Component | What it does |
+|---|---|
+| [Access policy](/spec/runtime/policy) | Defines the rules that determine what an agent may do |
+| [Audit log](/spec/runtime/audit) | Records what the agent did, immutably |
+| [Credential broker](/spec/runtime/broker) | Validates and enforces policy on every credential request |
+
+For compliance requirements, see [compliance mappings](/spec/runtime/compliance) — SOC 2 CC6/7/9 and HIPAA §164.312 reference mappings.
+
+## Enforcement model
+
+Runtime enforcement happens at the broker layer, on every request:
+
+1. Agent presents its consent token
+2. Broker validates the token against the active policy
+3. Broker evaluates any applicable approval rules
+4. If approved: credential is returned &nbsp;·&nbsp; If denied: error returned &nbsp;·&nbsp; If pending approval: request is held
+
+Policy is evaluated at request time, not at install time. A policy change — reduced scope, new approval rule, or revocation — takes effect immediately on the next request.
