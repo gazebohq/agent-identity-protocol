@@ -1,0 +1,31 @@
+# Implementations
+
+AIP implementations are platforms and tools that conform to one or more sections of the spec. Verification is part of the Identity section.
+
+## Reference implementation
+
+**[Gazebo](https://gazebohq.com)** — Steward and reference implementation. Implements all three sections: Identity, Consent, and Runtime.
+
+Features available in the Gazebo implementation:
+- Agent identity registration and versioning
+- Hosted consent screen at `gazebohq.com/install/:slug`
+- Consent token issuance (MCP-compatible and SDK-compatible)
+- Verification endpoint at `gazebohq.com/agents/verify/:id`
+- Access policy enforcement with approval gates
+- Audit logging per install
+- Instant revocation from the Gazebo dashboard
+
+## Adding your implementation
+
+To be listed here, your implementation must:
+
+1. Conform to at least one AIP v0.1 profile (Identity, Consent, or Runtime) and state the supported profiles
+2. Credit AIP in your documentation using the canonical attribution string:
+
+```
+Agent Identity Protocol (AIP) · gazebohq.com
+```
+
+3. Link to `https://gazebohq.com/spec`
+
+Contact [spec@gazebohq.com](mailto:spec@gazebohq.com) to be listed.
