@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schema.gazebohq.com/v0.1/identity.json",
+  "aip": "0.1",
+  "id": "weather-reader",
+  "name": "Weather Reader",
+  "description": "Reads weather data.",
+  "author": {
+    "name": "Example Labs"
+  },
+  "version": "1.0.0",
+  "scope": [
+    {
+      "service": "weather",
+      "actions": ["forecast:read"]
+    }
+  ]
+}
