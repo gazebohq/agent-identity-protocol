@@ -1,0 +1,42 @@
+# Verification
+
+Any agent carrying an AIP identity can be verified at its `verify_url`. A verification endpoint returns a JSON projection of the published identity and its current status:
+
+```json
+{
+  "aip": "0.1",
+  "id": "stripe-payment-monitor",
+  "name": "Stripe Payment Monitor",
+  "status": "active",
+  "version": "1.0.0",
+  "scope": [
+    { "service": "stripe", "actions": ["payments:read", "charges:list", "charges:create"] },
+    { "service": "github", "actions": ["issues:write"] }
+  ],
+  "author": { "name": "Alice Chen" },
+  "verify_url": "https://gazebohq.com/agents/verify/stripe-payment-monitor",
+  "install_count": 1847,
+  "published_at": "2026-07-27T00:00:00Z",
+  "last_verified_at": "2026-07-27T12:00:00Z"
+}
+```
+
+The response uses the same scope shape as the [identity declaration](/spec/identity). A provider may add fields, but it must not alter the published identity, agent version, or declared scope for an active version.
+
+## Status values
+
+| Status | Meaning |
+|---|---|
+| `active` | Agent is published and accepting installs |
+| `deprecated` | Agent is superseded by a newer version; existing installs still work |
+| `revoked` | Agent has been removed by the author or the identity provider; installs are deactivated |
+
+## The verification badge
+
+An agent with a verified identity may display a badge linking to its `verify_url`. The badge indicates:
+
+- The agent has a declared, version-locked scope
+- The agent's identity is registered with a compatible provider
+- The agent's current status is publicly verifiable
+
+The badge does not guarantee the agent behaves as declared — it guarantees the declaration exists, is version-locked, and is verifiable. Behavioural trust accrues through install count and audit history.
