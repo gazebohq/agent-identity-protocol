@@ -1,0 +1,45 @@
+# Audit Log
+
+A conforming implementation must produce an audit log entry for every credential retrieval and every approval decision, including approved, denied, and pending-approval outcomes. The audit log is the primary mechanism for accountability and compliance verification.
+
+## Minimum fields
+
+```json
+{
+  "$schema": "https://schema.gazebohq.com/v0.1/audit-log.json",
+  "log_version": "1.0",
+  "event_id": "evt_01j9xkq3m4...",
+  "timestamp": "2026-08-10T09:14:02Z",
+  "agent_id": "stripe-payment-monitor",
+  "install_id": "...",
+  "service": "stripe",
+  "operation": "POST /v1/charges",
+  "authorization_basis": "policy:stripe:charges:create",
+  "outcome": "approved",
+  "approval_required": false
+}
+```
+
+## Fields
+
+| Field | Required | Description |
+|---|---|---|
+| `$schema` | yes | Use the canonical `https://schema.gazebohq.com/v0.1/audit-log.json` URL by default. A validator may accept an explicitly trusted, content-equivalent mirror that preserves the canonical schema `$id`; arbitrary schema URLs are not conforming. |
+| `log_version` | yes | Audit log schema version. Must be `"1.0"` for AIP v0.1. |
+| `event_id` | yes | Identifier unique within the issuing provider. Immutable after write. |
+| `timestamp` | yes | ISO 8601 UTC timestamp of the event. |
+| `agent_id` | yes | The agent that made the request. |
+| `install_id` | yes | The specific installation — links the event to a consent token and user. |
+| `service` | yes | The service the agent attempted to access. |
+| `operation` | yes | The operation attempted (e.g. HTTP method + path, or named action). |
+| `authorization_basis` | yes | Stable provider-defined identifier for the policy rule that authorised or denied the operation. |
+| `outcome` | yes | One of `approved`, `denied`, or `pending_approval`. |
+| `approval_required` | yes | Whether the operation triggered an approval rule. |
+
+## Immutability
+
+Audit log entries must not be modified after write. Implementations must use append-only storage or an equivalent write-once mechanism. Log entries are evidence — retroactive modification voids their compliance value.
+
+## Retention
+
+Implementations should retain audit logs for a minimum of 90 days. Compliance-oriented deployments (SOC 2, HIPAA) typically require 12 months. Retention policy is implementation-defined; the spec defines the minimum fields, not the storage mechanism.
