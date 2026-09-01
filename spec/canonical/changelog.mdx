@@ -1,0 +1,33 @@
+# Changelog
+
+## v0.1 — August 2026
+
+Initial publication.
+
+**Identity section**
+- Agent identity declaration schema
+- Scope syntax (`service:action` format, four permission levels)
+- Versioning rule — scope changes require a new version and re-consent
+
+**Consent section**
+- Consent token properties and structure
+- Revocation semantics — immediate, user-initiated, independent per install
+
+**Verification section**
+- Verification endpoint schema and status values (`active`, `deprecated`, `revoked`)
+- Verification badge specification
+
+**Runtime section**
+- Access policy schema with policy narrowing and approval rules
+- Audit log minimum fields, immutability requirements, and retention guidance
+- Credential broker protocol — token exchange, per-request policy checks, revocation propagation, MCP compatibility
+- SOC 2 (CC6/7/9) and HIPAA §164.312 compliance reference mappings
+
+**Implementing AIP**
+- Guidance for identity providers, agent marketplaces, and agent builders
+- Attribution requirements and canonical string
+- Relationship to OAuth 2.0, MCP, and SPIFFE
+
+---
+
+*The `aip` field is the protocol version; an identity's `version` field is its independent agent-release version. A future protocol version may add optional fields or extend sections. Any change that makes a valid v0.1 required field invalid requires a new protocol version.*
