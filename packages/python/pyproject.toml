@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gazebo-agent-identity-protocol"
+version = "0.1.0"
+description = "Portable AIP v0.1 validators for identity, policy, and audit-log documents."
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [
+  { name = "Gazebo" }
+]
+dependencies = [
+  "jsonschema>=4.23,<5"
+]
+keywords = [
+  "agent-identity-protocol",
+  "aip",
+  "ai-agents",
+  "json-schema",
+  "validator"
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Libraries",
+  "Typing :: Typed"
+]
+
+[project.urls]
+Homepage = "https://gazebohq.com/spec"
+Documentation = "https://gazebohq.com/spec"
+Repository = "https://github.com/gazebohq/agent-identity-protocol"
+Issues = "https://github.com/gazebohq/agent-identity-protocol/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+gazebo_agent_identity_protocol = [
+  "py.typed",
+  "schemas/*.json"
+]
+
+[tool.setuptools]
+include-package-data = true
