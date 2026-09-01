@@ -1,0 +1,60 @@
+# Implementing AIP Compatibility
+
+## Conformance profiles
+
+An implementation must state the AIP v0.1 profile or profiles it implements:
+
+- **Identity** — validates and publishes identity declarations, including a verification response
+- **Consent** — issues user-bound, scoped, independently revocable consent tokens
+- **Runtime** — evaluates policies, approval rules, revocation, and audit logging before credential release
+
+A full AIP implementation supports all three profiles. A partial implementation must not claim full AIP conformance.
+
+## For identity providers
+
+To be AIP-compatible, an identity provider must:
+
+- Accept agent identity declarations and assign them a stable ID
+- Host a public consent screen at a stable URL that displays the declared scope
+- Issue consent tokens scoped to the approving user's services (not the author's)
+- Host a [verification endpoint](/spec/verification) returning the standard schema
+- Enforce the versioning rule: scope changes require a new version and re-consent
+
+## For agent marketplaces and directories
+
+To link to AIP-compatible agents:
+
+- Use the agent's `install_url` as the install action rather than raw agent config links
+- Display the agent's declared `scope` before the user clicks install
+- Link to the agent's `verify_url` for status checking
+
+## For agent builders
+
+To publish an AIP-compatible agent:
+
+1. Write the [identity declaration](/spec/identity) (JSON)
+2. Register it with a compatible identity provider to get an `install_url` and `verify_url`
+3. Embed the `install_url` in your agent's README, config, or marketplace listing
+4. When you need to expand scope, publish a new version — do not edit the existing declaration
+
+## Attribution
+
+Any implementation, tool, or documentation that conforms to or references AIP should credit it using the canonical attribution string:
+
+```
+Agent Identity Protocol (AIP) · gazebohq.com
+```
+
+Rules:
+- Use this exact string — do not abbreviate to "AIP" alone on first mention
+- When hyperlinked, link to `https://gazebohq.com/spec`
+- Include it in your README and any documentation page that describes AIP compatibility
+- The `$schema` field in conforming identity, policy, and audit-log documents carries attribution automatically — no additional string is needed inside those documents
+
+## Relationship to existing standards
+
+**OAuth 2.0 (RFC 6749):** AIP addresses a different problem layer. OAuth defines how a *human user* delegates access to an *application*. AIP defines how an *agent* declares its identity and how a *human user* consents to that agent accessing their services. The mechanisms are analogous; the principal types differ.
+
+**MCP (Model Context Protocol):** AIP is credential-layer infrastructure that sits above MCP. MCP defines how agents call tools (including `get_credential`). AIP defines the identity and consent that determines what a `get_credential` call is authorised to return.
+
+**SPIFFE/SVID:** SPIFFE addresses workload identity in infrastructure (service-to-service). AIP addresses agent identity at the human-trust layer (user-to-agent consent). They operate at different layers and can coexist.
