@@ -1,0 +1,8 @@
+packages:
+  - packages/*
+
+catalog:
+  tsx: ^4.21.0
+  zod: ^3.25.76
+
+autoInstallPeers: false
