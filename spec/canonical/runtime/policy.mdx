@@ -1,0 +1,68 @@
+# Access Policy
+
+An access policy document is a machine-readable declaration of what a specific agent installation may do, including any approval rules that gate specific operations.
+
+## Schema
+
+```json
+{
+  "$schema": "https://schema.gazebohq.com/v0.1/policy.json",
+  "aip": "0.1",
+  "agent_id": "stripe-payment-monitor",
+  "install_id": "...",
+  "version": "1.0.0",
+  "policy": [
+    {
+      "service": "stripe",
+      "actions": ["payments:read", "charges:list", "charges:create"]
+    },
+    {
+      "service": "github",
+      "actions": ["issues:write"]
+    }
+  ],
+  "approval_rules": [
+    {
+      "service": "stripe",
+      "actions": ["charges:create"],
+      "threshold": { "amount_usd": 100 },
+      "requires_approval": true
+    }
+  ]
+}
+```
+
+## Fields
+
+| Field | Required | Description |
+|---|---|---|
+| `$schema` | yes | Use the canonical `https://schema.gazebohq.com/v0.1/policy.json` URL by default. A validator may accept an explicitly trusted, content-equivalent mirror that preserves the canonical schema `$id`; arbitrary schema URLs are not conforming. |
+| `aip` | yes | Protocol version. Must match the agent identity declaration. |
+| `agent_id` | yes | Must match the `id` in the agent's identity declaration. |
+| `install_id` | yes | Unique identifier for this installation — links the policy to the consent token. |
+| `version` | yes | Must match the agent version that was consented to. |
+| `policy` | yes | Non-empty array of service permission objects using the [scope syntax](/spec/scope). Must be equal to or narrower than the declared scope. |
+| `approval_rules` | no | Array of conditional approval rules. Each rule's actions must already appear in `policy`; matching actions require human approval before execution. |
+
+## Policy narrowing
+
+A policy document may grant a subset of the agent's declared scope. It may never grant more than the declared scope — enforced by the identity provider at install time. The installing user may narrow scope further at consent time; the policy document reflects the scope actually granted.
+
+## Approval rules
+
+Approval rules gate specific operations already granted by policy behind human confirmation. A rule specifies:
+
+- `service` and `actions` — which operations are gated
+- `threshold` (optional) — exactly one condition that triggers the gate
+- `requires_approval: true` — the broker must hold the request and notify the approver before proceeding
+
+If `threshold` is omitted, the rule applies to every matching operation. A v0.1
+threshold object must contain exactly one of:
+
+| Field | Type | Meaning |
+|---|---|---|
+| `amount_usd` | non-negative number | Apply the rule when the operation's USD amount is at least this value. |
+| `record_count` | non-negative integer | Apply the rule when the operation affects at least this many records. |
+
+Unknown threshold fields and threshold objects containing both fields are not
+conforming in v0.1.
