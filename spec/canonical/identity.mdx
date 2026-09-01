@@ -1,0 +1,55 @@
+# Agent Identity Declaration
+
+An agent identity is a JSON document. It may be hosted at a URL, embedded in an agent config file, or registered with a compatible identity provider.
+
+## Schema
+
+```json
+{
+  "$schema": "https://schema.gazebohq.com/v0.1/identity.json",
+  "aip": "0.1",
+  "id": "stripe-payment-monitor",
+  "name": "Stripe Payment Monitor",
+  "description": "Monitors Stripe for failed payments and files a GitHub issue.",
+  "author": {
+    "name": "Alice Chen",
+    "url": "https://example.com/agents/alice"
+  },
+  "version": "1.0.0",
+  "scope": [
+    {
+      "service": "stripe",
+      "actions": ["payments:read", "charges:list", "charges:create"]
+    },
+    {
+      "service": "github",
+      "actions": ["issues:write"]
+    }
+  ],
+  "install_url": "https://gazebohq.com/install/stripe-payment-monitor",
+  "verify_url": "https://gazebohq.com/agents/verify/stripe-payment-monitor",
+  "published_at": "2026-07-27T00:00:00Z"
+}
+```
+
+## Fields
+
+| Field | Required | Description |
+|---|---|---|
+| `$schema` | yes | Use the canonical `https://schema.gazebohq.com/v0.1/identity.json` URL by default. A validator may accept an explicitly trusted, content-equivalent mirror that preserves the canonical schema `$id`; arbitrary schema URLs are not conforming. |
+| `aip` | yes | Protocol version. Must be `"0.1"` for this version. |
+| `id` | yes | Unique lowercase ASCII slug within the registering identity provider. Hyphens are allowed. |
+| `name` | yes | Human-readable display name. |
+| `description` | yes | Plain-language description of what the agent does. |
+| `author` | yes | Object with `name` (string) and optional `url`. |
+| `version` | yes | Agent release version as a SemVer string. This is distinct from the `aip` protocol version. Scope changes must bump the agent version. |
+| `scope` | yes | Non-empty array of service permission objects. See [scope syntax](/spec/scope). |
+| `install_url` | recommended | URL to the consent screen for this agent. |
+| `verify_url` | recommended | URL to verify the agent's current status. |
+| `published_at` | recommended | ISO 8601 timestamp of first publication. |
+
+## Versioning rule
+
+The declared `scope` is immutable per agent version. If an agent needs additional permissions, it must publish a new version. Consumers who installed a previous version must re-consent to the new scope — silent scope expansion is not permitted.
+
+The `aip` field identifies the protocol version and the `version` field identifies the agent release. A provider must treat the pair of `id` and agent `version` as the version-locked declaration being installed.
