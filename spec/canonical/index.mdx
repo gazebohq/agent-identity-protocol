@@ -1,0 +1,55 @@
+# Agent Identity Protocol (AIP)
+
+**Version:** 0.1 &nbsp;·&nbsp; **Status:** Published draft &nbsp;·&nbsp; **Published:** August 2026 &nbsp;·&nbsp; **Steward:** [Gazebo](https://gazebohq.com) &nbsp;·&nbsp; **License:** Apache 2.0
+
+AIP is an open standard for AI agent identity and access control. It defines how an agent declares what it is and what it needs, how a user consents to letting an agent act on their behalf, and how that consent is enforced on every subsequent request.
+
+## Why this exists
+
+AI agents share credentials the way early web apps shared passwords. A developer hands an agent an API key with full permissions, and the agent does whatever the key allows — with no declared scope, no consent from the credential owner, no audit trail, and no revocation path short of rotating the key for every system using it.
+
+The early web solved the equivalent problem twice:
+
+- **OAuth** solved the "app wants your password" problem by introducing delegated, scoped access with an explicit consent moment
+- **SSL/TLS** solved the "how do I know this site is who it claims" problem by establishing verifiable identity
+
+Agents need both. AIP defines the identity, consent, and enforcement layers: a standard way to declare what an agent is, what it needs, how a user grants scoped access, and how that access is enforced — so agents can be shared, installed, and trusted without handing over raw credentials.
+
+## Three sections
+
+AIP is one specification with three sections. They compose into a complete system but can be adopted independently.
+
+| Section | Answers | Analogous to |
+|---|---|---|
+| [Identity](/spec/identity) | Who is this agent and what does it say it needs? | SSL certificate |
+| [Consent](/spec/consent) | Did a user agree to let this agent act, and on what terms? | OAuth grant |
+| [Runtime](/spec/runtime) | Is this agent allowed to do this specific thing right now? | SCIM + OpenTelemetry |
+
+## What this spec defines
+
+1. **Agent identity declaration** — how an agent describes itself and its required access
+2. **Scope syntax** — how service permissions are expressed
+3. **The consent token** — what gets issued after a user approves an agent
+4. **Verification** — how anyone can check an agent's declared identity and current status
+5. **Runtime enforcement** — access policy, audit logging, and the credential broker protocol
+6. **Compliance mappings** — how the above satisfies SOC 2 and HIPAA requirements
+
+## v0.1 conformance boundary
+
+An implementation may conform to Identity, Consent, or Runtime independently. Verification is the public discovery component of the Identity section.
+
+v0.1 standardises identity, policy, and audit-log documents along with the consent and enforcement behaviours around them. **Out of scope:** credential storage, consent UI rendering, token encoding, cryptographic trust mechanisms, and the transport binding used to retrieve a credential. The HTTP and MCP examples in Runtime are informative reference bindings, not required APIs.
+
+## Reference implementation
+
+[Gazebo](https://gazebohq.com) is the reference implementation of AIP. The protocol is not proprietary — any platform may implement AIP independently. See the [implementations page](/spec/implementations).
+
+## Attribution
+
+When referencing or implementing AIP, use the canonical attribution string:
+
+```
+Agent Identity Protocol (AIP) · gazebohq.com
+```
+
+See the [compatibility guide](/spec/compatibility#attribution) for full requirements.
