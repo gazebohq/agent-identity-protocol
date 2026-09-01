@@ -13,12 +13,8 @@ from gazebo_agent_identity_protocol import (
 
 
 PACKAGE_ROOT = Path(__file__).parents[1]
-CANONICAL_PACKAGE = PACKAGE_ROOT.parent / "agent-identity-protocol"
-SHARED_FIXTURES = (
-    CANONICAL_PACKAGE
-    / "test"
-    / "fixtures"
-)
+REPOSITORY_ROOT = PACKAGE_ROOT.parents[1]
+SHARED_FIXTURES = REPOSITORY_ROOT / "fixtures"
 
 
 def load_json(path: Path):
@@ -90,7 +86,7 @@ class ConformanceTests(unittest.TestCase):
         for filename in ("identity.json", "policy.json", "audit-log.json"):
             self.assertEqual(
                 load_json(bundled_schemas / filename),
-                load_json(CANONICAL_PACKAGE / "schemas" / filename),
+                load_json(REPOSITORY_ROOT / "schemas" / filename),
                 filename,
             )
 
