@@ -1,0 +1,54 @@
+# Credential Broker Protocol
+
+The credential broker is the runtime component that sits between the agent and its underlying credentials. Its required behaviour is transport-neutral. On every request it:
+
+1. Validates the agent's consent token
+2. Checks the request against the active policy
+3. Evaluates any applicable approval rules
+4. Returns a scoped credential, a denial error, or a pending-approval response
+
+## Reference HTTP binding (informative)
+
+The following is an informative HTTP example. A conforming broker may expose a different transport, provided it validates the install token, evaluates current policy and approval rules, and returns a scoped credential, denial, or pending-approval result.
+
+```
+POST /broker/credential
+Authorization: Bearer {install_token}
+
+{
+  "service": "stripe",
+  "action": "charges:list"
+}
+```
+
+Response:
+
+```json
+{
+  "credential": "...",
+  "expires_at": "2026-08-10T10:14:02Z",
+  "scope": "stripe:charges:list"
+}
+```
+
+## Policy check on every request
+
+The policy is evaluated at request time, not at install time. A policy change — reduced scope, new approval rule, or revocation — takes effect on the next request. The broker must evaluate current policy and revocation state before releasing a credential.
+
+## Revocation propagation
+
+When a user revokes consent, the broker must refuse all subsequent credential requests for that install ID immediately. There is no grace period. Token expiry is irrelevant — a revoked install ID is refused regardless of whether the install token would otherwise still be valid.
+
+## MCP binding (informative)
+
+An implementation that exposes the broker through MCP may model the same request as a `get_credential` tool call. This binding is informative; MCP itself defines the tool-call transport.
+
+```json
+{
+  "tool": "get_credential",
+  "arguments": {
+    "service": "stripe",
+    "action": "charges:list"
+  }
+}
+```
