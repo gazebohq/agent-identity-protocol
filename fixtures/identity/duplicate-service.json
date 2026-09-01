@@ -1,0 +1,21 @@
+{
+  "$schema": "https://schema.gazebohq.com/v0.1/identity.json",
+  "aip": "0.1",
+  "id": "duplicate-scope",
+  "name": "Duplicate Scope",
+  "description": "Invalid because the same service is declared twice.",
+  "author": {
+    "name": "Example Labs"
+  },
+  "version": "1.0.0",
+  "scope": [
+    {
+      "service": "stripe",
+      "actions": ["charges:read"]
+    },
+    {
+      "service": "stripe",
+      "actions": ["customers:read"]
+    }
+  ]
+}
