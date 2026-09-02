@@ -4,6 +4,9 @@ updates:
     directory: /
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     labels: [dependencies, security]
 
   - package-ecosystem: npm
@@ -11,6 +14,9 @@ updates:
     schedule:
       interval: weekly
     versioning-strategy: increase
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       npm-dependencies:
         patterns: ["*"]
@@ -20,6 +26,9 @@ updates:
     directory: /packages/python
     schedule:
       interval: weekly
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
     groups:
       python-dependencies:
         patterns: ["*"]
