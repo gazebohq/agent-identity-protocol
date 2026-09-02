@@ -51,7 +51,7 @@ Please do not include credentials, private customer data, or provider secrets in
 
 ## Reporting security issues
 
-Please do not open a public issue for a suspected security vulnerability. Contact the Gazebo maintainers privately with enough detail to reproduce the problem. Do not include live tokens or credentials in the report.
+Do not open a public issue for a suspected vulnerability. Follow [SECURITY.md](.github/SECURITY.md) and report it privately to security@gazebohq.com. Do not include live tokens, credentials, customer data, or other secrets in the report.
 
 ## License
 
