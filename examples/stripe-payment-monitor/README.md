@@ -6,6 +6,6 @@ This example shows one agent described with three separate AIP v0.1 documents:
 - `policy.json` narrows the active permissions for one installation and adds an approval rule.
 - `audit-log.json` records an operation and its authorization basis.
 
-The policy is narrower than the identity declaration: the agent may request `charges:create`, but this installation only grants read actions. The audit event records a separate operation that would require an applicable policy and approval decision at runtime.
+The policy is narrower than the identity declaration: the agent may request `charges:create`, but this installation only grants read actions. The audit event records an approved charge-list operation after the applicable approval decision.
 
 Validate the repository fixtures and validator behavior with the commands in [`CONFORMANCE.md`](../../CONFORMANCE.md).

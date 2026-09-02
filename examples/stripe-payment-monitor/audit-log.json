@@ -6,8 +6,8 @@
   "agent_id": "stripe-payment-monitor",
   "install_id": "install_123",
   "service": "stripe",
-  "operation": "POST /v1/charges",
-  "authorization_basis": "policy:stripe:charges:create",
+  "operation": "GET /v1/charges",
+  "authorization_basis": "policy:stripe:charges:list",
   "outcome": "approved",
-  "approval_required": false
+  "approval_required": true
 }
