@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schema.gazebohq.com/v0.1/identity.json",
+  "aip": "0.1",
+  "id": "stripe-payment-monitor",
+  "name": "Stripe Payment Monitor",
+  "description": "Monitors Stripe for failed payments and files a GitHub issue.",
+  "author": {
+    "name": "Alice Chen",
+    "url": "https://example.com/agents/alice"
+  },
+  "version": "1.0.0",
+  "scope": [
+    {
+      "service": "stripe",
+      "actions": ["payments:read", "charges:list", "charges:create"]
+    },
+    {
+      "service": "github",
+      "actions": ["issues:write"]
+    }
+  ],
+  "install_url": "https://gazebohq.com/install/stripe-payment-monitor",
+  "verify_url": "https://gazebohq.com/agents/verify/stripe-payment-monitor",
+  "published_at": "2026-07-27T00:00:00Z"
+}

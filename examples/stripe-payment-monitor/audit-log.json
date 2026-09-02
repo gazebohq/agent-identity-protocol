@@ -1,0 +1,13 @@
+{
+  "$schema": "https://schema.gazebohq.com/v0.1/audit-log.json",
+  "log_version": "1.0",
+  "event_id": "evt_01j9xkq3m4",
+  "timestamp": "2026-08-10T09:14:02Z",
+  "agent_id": "stripe-payment-monitor",
+  "install_id": "install_123",
+  "service": "stripe",
+  "operation": "POST /v1/charges",
+  "authorization_basis": "policy:stripe:charges:create",
+  "outcome": "approved",
+  "approval_required": false
+}
