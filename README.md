@@ -31,21 +31,14 @@ Consent-token and broker-request encodings remain implementation-defined in v0.1
 
 ## Packages
 
-### TypeScript
+The npm and PyPI packages are planned for the AIP v0.1 release but are not published yet. Until an official registry release is announced, use the validators directly from this repository.
 
-Install the portable validator package:
+Planned package names:
 
-    npm install @gazebohq/agent-identity-protocol
+- npm: @gazebohq/agent-identity-protocol
+- PyPI: gazebo-agent-identity-protocol
 
-The package exports validateIdentity, validatePolicy, validateAuditLog, and validatePolicyAgainstIdentity, along with the TypeScript document types and canonical schema URLs.
-
-### Python
-
-Install the portable validator package:
-
-    pip install gazebo-agent-identity-protocol
-
-The Python package exports validate_identity, validate_policy, validate_audit_log, and validate_policy_against_identity.
+Do not install similarly named third-party packages as substitutes.
 
 ## Repository layout
 
